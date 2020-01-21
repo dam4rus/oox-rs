@@ -1,0 +1,32 @@
+[package]
+name = "oox"
+version = "0.1.0"
+edition = "2018"
+description = "Open Office XML file format deserializer"
+authors = ["Kalmár Róbert <rfrostkalmar@gmail.com>"]
+keywords = ["office", "pptx", "ppt", "docx", "doc"]
+license = "MIT"
+repository = "https://github.com/dam4rus/oox-rs.git"
+homepage = "https://github.com/dam4rus/oox-rs"
+readme = "README.md"
+exclude = [
+    "tests/sample.pptx",
+    "tests/sample.docx",
+    "tests/presentation.xml",
+]
+
+[dependencies]
+quick-xml = "0.17.2"
+zip = "0.5.4"
+log = "0.4.8"
+strum = "0.17.1"
+strum_macros = "0.17.1"
+regex = "1.3.3"
+
+[dev-dependencies]
+simple_logger = "1.4.0"
+
+[features]
+default = [ "docx", "pptx" ]
+docx = []
+pptx = []
