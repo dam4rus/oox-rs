@@ -1,11 +1,11 @@
 use super::paragraphs::{TextCharacterProperties, TextField, TextLineBreak};
 use crate::{
+    error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::drawingml::{
         core::LineProperties,
         shapeprops::FillProperties,
         simpletypes::{Panose, TextTypeFace},
     },
-    error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     xml::XmlNode,
     xsdtypes::{XsdChoice, XsdType},
 };

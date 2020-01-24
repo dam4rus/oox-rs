@@ -84,8 +84,8 @@ impl Footnotes {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use super::super::document::{ContentBlockContent, P};
+    use super::*;
     use std::str::FromStr;
 
     impl Footnotes {

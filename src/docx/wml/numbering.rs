@@ -3,13 +3,13 @@ use super::{
     simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber},
     util::XmlNodeExt,
 };
-use log::info;
 use crate::{
     error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::sharedtypes::OnOff,
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };
+use log::info;
 use std::any::Any;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;

@@ -1,4 +1,5 @@
 use crate::{
+    error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::{
         drawingml::{
             audiovideo::{EmbeddedWAVAudioFile, Media},
@@ -17,7 +18,6 @@ use crate::{
         },
         relationship::RelationshipId,
     },
-    error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };

@@ -8,8 +8,11 @@ use super::{
     table::Tbl,
     util::XmlNodeExt,
 };
-use log::info;
 use crate::{
+    error::{
+        LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError,
+        ParseHexColorError,
+    },
     shared::{
         drawingml::simpletypes::{parse_hex_color_rgb, HexColorRGB},
         relationship::RelationshipId,
@@ -18,11 +21,11 @@ use crate::{
             UniversalMeasure, VerticalAlignRun, XAlign, XmlName, YAlign,
         },
     },
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError, ParseHexColorError},
     update::{update_options, Update},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };
+use log::info;
 use std::str::FromStr;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
@@ -6264,8 +6267,11 @@ mod tests {
 
     impl PermStart {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:id="Some id" w:displacedByCustomXml="next" w:edGrp="everyone" w:ed="rfrostkalmar@gmail.com" w:colFirst="0" w:colLast="1">
-        </{node_name}>"#, node_name=node_name)
+            format!(
+                r#"<{node_name} w:id="Some id" w:displacedByCustomXml="next" w:edGrp="everyone" w:ed="rfrostkalmar@gmail.com" w:colFirst="0" w:colLast="1">
+        </{node_name}>"#,
+                node_name = node_name
+            )
         }
 
         pub fn test_instance() -> Self {
@@ -6377,8 +6383,11 @@ mod tests {
 
     impl MoveBookmark {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:id="0" w:displacedByCustomXml="next" w:colFirst="0" w:colLast="1" w:name="Some name" w:author="John Smith" w:date="2001-10-26T21:32:52">
-        </{node_name}>"#, node_name=node_name)
+            format!(
+                r#"<{node_name} w:id="0" w:displacedByCustomXml="next" w:colFirst="0" w:colLast="1" w:name="Some name" w:author="John Smith" w:date="2001-10-26T21:32:52">
+        </{node_name}>"#,
+                node_name = node_name
+            )
         }
 
         pub fn test_instance() -> Self {
@@ -6519,13 +6528,20 @@ mod tests {
 
     impl Hyperlink {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:tgtFrame="_blank" w:tooltip="Some tooltip" w:docLocation="table" w:history="true" w:anchor="chapter1" r:id="rId1"></{node_name}>"#, node_name=node_name)
+            format!(
+                r#"<{node_name} w:tgtFrame="_blank" w:tooltip="Some tooltip" w:docLocation="table" w:history="true" w:anchor="chapter1" r:id="rId1"></{node_name}>"#,
+                node_name = node_name
+            )
         }
 
         pub fn test_xml_recursive(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:tgtFrame="_blank" w:tooltip="Some tooltip" w:docLocation="table" w:history="true" w:anchor="chapter1" r:id="rId1">
+            format!(
+                r#"<{node_name} w:tgtFrame="_blank" w:tooltip="Some tooltip" w:docLocation="table" w:history="true" w:anchor="chapter1" r:id="rId1">
             {}
-        </{node_name}>"#, SimpleField::test_xml("fldSimple"), node_name=node_name)
+        </{node_name}>"#,
+                SimpleField::test_xml("fldSimple"),
+                node_name = node_name
+            )
         }
 
         pub fn test_instance() -> Self {
@@ -6755,8 +6771,7 @@ mod tests {
     }
 
     impl Border {
-        const TEST_ATTRIBUTES: &'static str =
-            r#"w:val="single" w:color="ffffff" w:themeColor="accent1" w:themeTint="ff"
+        const TEST_ATTRIBUTES: &'static str = r#"w:val="single" w:color="ffffff" w:themeColor="accent1" w:themeTint="ff"
             w:themeShade="ff" w:sz="100" w:space="100" w:shadow="true" w:frame="true""#;
 
         pub fn test_xml(node_name: &'static str) -> String {
@@ -7239,10 +7254,11 @@ mod tests {
 
     impl DataBinding {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:prefixMappings="xmlns:ns0='http://example.com/example'" w:xpath="//ns0:book" w:storeItemID="testXmlPart">
-        </{node_name}>"#
-            , node_name=node_name
-        )
+            format!(
+                r#"<{node_name} w:prefixMappings="xmlns:ns0='http://example.com/example'" w:xpath="//ns0:book" w:storeItemID="testXmlPart">
+        </{node_name}>"#,
+                node_name = node_name
+            )
         }
 
         pub fn test_instance() -> Self {
@@ -7595,9 +7611,10 @@ mod tests {
 
     impl ObjectLink {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:drawAspect="content" r:id="rId1" w:progId="AVIFile" w:shapeId="1" w:fieldCodes="\f 0" w:updateMode="always" w:lockedField="true">
+            format!(
+                r#"<{node_name} w:drawAspect="content" r:id="rId1" w:progId="AVIFile" w:shapeId="1" w:fieldCodes="\f 0" w:updateMode="always" w:lockedField="true">
             </{node_name}>"#,
-                node_name=node_name
+                node_name = node_name
             )
         }
 
@@ -9466,13 +9483,14 @@ mod tests {
 
     impl P {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:rsidRPr="ffffffff" w:rsidR="fefefefe" w:rsidDel="fdfdfdfd" w:rsidP="fcfcfcfc" w:rsidRDefault="fbfbfbfb">
+            format!(
+                r#"<{node_name} w:rsidRPr="ffffffff" w:rsidR="fefefefe" w:rsidDel="fdfdfdfd" w:rsidP="fcfcfcfc" w:rsidRDefault="fbfbfbfb">
                 {}
                 {}
             </{node_name}>"#,
                 PPr::test_xml("pPr"),
                 PContent::test_simple_field_xml(),
-                node_name=node_name,
+                node_name = node_name,
             )
         }
 

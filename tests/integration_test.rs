@@ -1,3 +1,4 @@
+#![cfg(feature = "docx")]
 extern crate oox;
 
 use oox::docx::package::Package;

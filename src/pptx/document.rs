@@ -2,12 +2,12 @@ use super::pml::{
     presentation::Presentation,
     slides::{Slide, SlideLayout, SlideMaster},
 };
-use log::info;
 use crate::shared::{
     docprops::{AppInfo, Core},
     drawingml::sharedstylesheet::OfficeStyleSheet,
-    relationship::{Relationship, relationships_from_zip_file},
+    relationship::{relationships_from_zip_file, Relationship},
 };
+use log::info;
 use std::collections::HashMap;
 use std::fs::File;
 use std::path::{Path, PathBuf};
@@ -62,10 +62,7 @@ impl PPTXDocument {
                 }
 
                 info!("parsing slide master relationship file: {}", zip_file.name());
-                slide_master_rels_map.insert(
-                    file_path,
-                    relationships_from_zip_file(&mut zip_file)?,
-                );
+                slide_master_rels_map.insert(file_path, relationships_from_zip_file(&mut zip_file)?);
             } else if file_path.starts_with("ppt/slideMasters") {
                 if file_path.extension().unwrap_or_default() != "xml" {
                     continue;
@@ -79,10 +76,7 @@ impl PPTXDocument {
                 }
 
                 info!("parsing slide layout relationship file: {}", zip_file.name());
-                slide_layout_rels_map.insert(
-                    file_path,
-                    relationships_from_zip_file(&mut zip_file)?,
-                );
+                slide_layout_rels_map.insert(file_path, relationships_from_zip_file(&mut zip_file)?);
             } else if file_path.starts_with("ppt/slideLayouts") {
                 if file_path.extension().unwrap_or_default() != "xml" {
                     continue;
@@ -96,10 +90,7 @@ impl PPTXDocument {
                 }
 
                 info!("parsing slide relationship file: {}", zip_file.name());
-                slide_rels_map.insert(
-                    file_path,
-                    relationships_from_zip_file(&mut zip_file)?,
-                );
+                slide_rels_map.insert(file_path, relationships_from_zip_file(&mut zip_file)?);
             } else if file_path.starts_with("ppt/slides") {
                 if file_path.extension().unwrap_or_default() != "xml" {
                     continue;

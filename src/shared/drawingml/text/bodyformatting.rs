@@ -1,4 +1,5 @@
 use crate::{
+    error::NotGroupMemberError,
     shared::drawingml::{
         shapedefs::PresetTextShape,
         simpletypes::{
@@ -6,7 +7,6 @@ use crate::{
             TextHorizontalOverflowType, TextSpacingPercent, TextVertOverflowType, TextVerticalType, TextWrappingType,
         },
     },
-    error::NotGroupMemberError,
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };

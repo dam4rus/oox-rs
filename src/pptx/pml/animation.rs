@@ -1,5 +1,9 @@
 use super::util::XmlNodeExt;
 use crate::{
+    error::{
+        LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError,
+        ParseEnumError,
+    },
     shared::drawingml::{
         audiovideo::EmbeddedWAVAudioFile,
         colors::Color,
@@ -8,7 +12,6 @@ use crate::{
             Angle, DrawingElementId, FixedPercentage, Percentage, PositiveFixedPercentage, PositivePercentage, ShapeId,
         },
     },
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError, ParseEnumError},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };
@@ -4495,12 +4498,13 @@ mod tests {
 
     impl TLBuildParagraph {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} {} build="whole" bldLvl="0" animBg="true" autoUpdateAnimBg="true" rev="false" advAuto="1000">
+            format!(
+                r#"<{node_name} {} build="whole" bldLvl="0" animBg="true" autoUpdateAnimBg="true" rev="false" advAuto="1000">
                 {}
             </{node_name}>"#,
                 TLBuildCommonAttributes::TEST_ATTRIBUTES,
                 TLTemplateList::test_xml("tmplLst"),
-                node_name=node_name,
+                node_name = node_name,
             )
         }
 

@@ -1,9 +1,3 @@
-use crate::{
-    shared::relationship::RelationshipId,
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
-    xml::{parse_xml_bool, XmlNode},
-    xsdtypes::{XsdChoice, XsdType},
-};
 use super::{
     colors::Color,
     simpletypes::{
@@ -12,6 +6,12 @@ use super::{
         PositiveFixedPercentage, PositivePercentage, PresetLineDashVal, PresetPatternVal, PresetShadowVal,
         RectAlignment, TileFlipMode,
     },
+};
+use crate::{
+    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
+    shared::relationship::RelationshipId,
+    xml::{parse_xml_bool, XmlNode},
+    xsdtypes::{XsdChoice, XsdType},
 };
 use log::trace;
 use std::error::Error;

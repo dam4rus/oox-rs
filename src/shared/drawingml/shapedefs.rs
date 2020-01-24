@@ -1,11 +1,11 @@
+use super::simpletypes::{
+    AdjAngle, AdjCoordinate, GeomGuideFormula, GeomGuideName, PathFillMode, PositiveCoordinate, ShapeType,
+    TextShapeType,
+};
 use crate::{
     error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
-};
-use super::simpletypes::{
-    AdjAngle, AdjCoordinate, GeomGuideFormula, GeomGuideName, PathFillMode, PositiveCoordinate, ShapeType,
-    TextShapeType,
 };
 use std::error::Error;
 

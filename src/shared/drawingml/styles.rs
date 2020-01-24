@@ -1,14 +1,14 @@
-use crate::{
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError},
-    xml::XmlNode,
-    xsdtypes::{XsdChoice, XsdType},
-};
 use super::{
     colors::Color,
     core::{LineProperties, ShapeProperties, ShapeStyle},
     shapeprops::{EffectProperties, FillProperties},
     simpletypes::{FontCollectionIndex, StyleMatrixColumnIndex, TextTypeFace},
     text::{bodyformatting::TextBodyProperties, bullet::TextListStyle, runformatting::TextFont},
+};
+use crate::{
+    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError},
+    xml::XmlNode,
+    xsdtypes::{XsdChoice, XsdType},
 };
 use log::trace;
 use std::error::Error;

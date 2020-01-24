@@ -1,4 +1,5 @@
 use crate::{
+    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::{
         drawingml::{
             coordsys::{Point2D, PositiveSize2D, Transform2D},
@@ -14,7 +15,6 @@ use crate::{
         },
         relationship::RelationshipId,
     },
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::XsdChoice,
 };
@@ -1538,7 +1538,8 @@ mod tests {
 
     impl Anchor {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} distT="0" distB="100" distL="0" distR="100" simplePos="false" relativeHeight="100" behindDoc="false" locked="false" layoutInCell="false" hidden="false" allowOverlap="false">
+            format!(
+                r#"<{node_name} distT="0" distB="100" distL="0" distR="100" simplePos="false" relativeHeight="100" behindDoc="false" locked="false" layoutInCell="false" hidden="false" allowOverlap="false">
             <simplePos x="0" y="0" />
             {}
             {}
@@ -1548,14 +1549,14 @@ mod tests {
             {}
             {}
         </{node_name}>"#,
-            PosH::test_xml_with_align("positionH"),
-            PosV::test_xml_with_align("positionV"),
-            EffectExtent::test_xml("effectExtent"),
-            WrapSquare::test_xml("wrapSquare"),
-            test_non_visual_drawing_props_xml("docPr"),
-            test_graphical_object_xml("a:graphic"),
-            node_name=node_name,
-        )
+                PosH::test_xml_with_align("positionH"),
+                PosV::test_xml_with_align("positionV"),
+                EffectExtent::test_xml("effectExtent"),
+                WrapSquare::test_xml("wrapSquare"),
+                test_non_visual_drawing_props_xml("docPr"),
+                test_graphical_object_xml("a:graphic"),
+                node_name = node_name,
+            )
         }
 
         pub fn test_instance() -> Self {

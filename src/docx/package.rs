@@ -2,8 +2,8 @@ use super::{
     resolvedstyle::{ResolvedStyle, RunProperties},
     wml::{
         document::{
-            BlockLevelElts, ContentBlockContent, ContentRunContent, Document, PContent, PPr, RPr, RPrBase, SectPrContents,
-            P, R,
+            BlockLevelElts, ContentBlockContent, ContentRunContent, Document, PContent, PPr, RPr, RPrBase,
+            SectPrContents, P, R,
         },
         footnotes::{Footnotes, FtnEdn, FtnEdnType},
         numbering::{Lvl, Numbering},
@@ -11,7 +11,6 @@ use super::{
         styles::{Style, StyleType, Styles},
     },
 };
-use log::error;
 use crate::{
     shared::{
         docprops::{AppInfo, Core},
@@ -21,6 +20,7 @@ use crate::{
     update::Update,
     xml::zip_file_to_xml_node,
 };
+use log::error;
 use std::{
     collections::HashMap,
     error::Error,
@@ -358,7 +358,6 @@ impl Package {
 #[cfg(test)]
 mod tests {
     use super::{
-        Package, RunProperties,
         super::{
             resolvedstyle::ParagraphProperties,
             wml::{
@@ -370,8 +369,9 @@ mod tests {
                 footnotes::{Footnotes, FtnEdn, FtnEdnType},
                 settings::Settings,
                 styles::{DocDefaults, PPrDefault, RPrDefault, Style, StyleType, Styles},
-            }
+            },
         },
+        Package, RunProperties,
     };
     use crate::shared::docprops::{AppInfo, Core};
 

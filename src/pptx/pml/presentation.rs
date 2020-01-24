@@ -1,4 +1,5 @@
 use crate::{
+    error::{MissingAttributeError, MissingChildNodeError},
     shared::{
         drawingml::{
             coordsys::PositiveSize2D,
@@ -8,7 +9,6 @@ use crate::{
         relationship::RelationshipId,
         sharedtypes::ConformanceClass,
     },
-    error::{MissingAttributeError, MissingChildNodeError},
     xml::{parse_xml_bool, XmlNode},
 };
 use std::{

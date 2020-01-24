@@ -3,16 +3,16 @@ use super::{
     simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber, UnsignedDecimalNumber},
     util::XmlNodeExt,
 };
-use log::info;
 use crate::{
+    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError},
     shared::{
         drawingml::simpletypes::Lang,
         relationship::RelationshipId,
         sharedtypes::{OnOff, TwipsMeasure},
     },
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError},
     xml::{parse_xml_bool, XmlNode},
 };
+use log::info;
 
 pub type Base64Binary = String;
 pub type DocType = String;
@@ -1593,9 +1593,10 @@ mod tests {
 
     impl WritingStyle {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:lang="en-US" w:vendorID="64" w:dllVersion="131078" w:nlCheck="true" w:checkStyle="true" w:appName="testApp">
+            format!(
+                r#"<{node_name} w:lang="en-US" w:vendorID="64" w:dllVersion="131078" w:nlCheck="true" w:checkStyle="true" w:appName="testApp">
             </{node_name}>"#,
-                node_name=node_name,
+                node_name = node_name,
             )
         }
 
@@ -1622,7 +1623,8 @@ mod tests {
 
     impl StylePaneFilter {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:allStyles="true" w:customStyles="true" w:latentStyles="true" w:stylesInUse="true"
+            format!(
+                r#"<{node_name} w:allStyles="true" w:customStyles="true" w:latentStyles="true" w:stylesInUse="true"
                 w:headingStyles="true" w:numberingStyles="true" w:tableStyles="true" w:directFormattingOnRuns="true"
                 w:directFormattingOnParagraphs="true" w:directFormattingOnNumbering="true" w:directFormattingOnTables="true"
                 w:clearFormatting="true" w:top3HeadingStyles="true" w:visibleStyles="true" w:alternateStyleNames="true">
@@ -1830,7 +1832,8 @@ mod tests {
 
     impl TrackChangesView {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:markup="true" w:comments="true" w:insDel="true" w:formatting="true" w:inkAnnotations="true">
+            format!(
+                r#"<{node_name} w:markup="true" w:comments="true" w:insDel="true" w:formatting="true" w:inkAnnotations="true">
             </{node_name}>"#,
                 node_name = node_name,
             )

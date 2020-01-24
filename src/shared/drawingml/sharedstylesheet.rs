@@ -1,12 +1,12 @@
-use crate::{
-    error::{MissingAttributeError, MissingChildNodeError},
-    xml::XmlNode,
-    xsdtypes::XsdChoice,
-};
 use super::{
     colors::{Color, CustomColor},
     simpletypes::ColorSchemeIndex,
     styles::{DefaultShapeDefinition, FontScheme, StyleMatrix},
+};
+use crate::{
+    error::{MissingAttributeError, MissingChildNodeError},
+    xml::XmlNode,
+    xsdtypes::XsdChoice,
 };
 use log::trace;
 use std::{io::Read, str::FromStr};

@@ -1,11 +1,11 @@
 use super::{paragraphs::TextParagraphProperties, runformatting::TextFont};
 use crate::{
+    error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::drawingml::{
         colors::Color,
         shapeprops::Blip,
         simpletypes::{TextAutonumberScheme, TextBulletSizePercent, TextBulletStartAtNum, TextFontSize},
     },
-    error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     xml::XmlNode,
     xsdtypes::{XsdChoice, XsdType},
 };

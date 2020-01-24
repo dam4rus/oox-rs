@@ -3,6 +3,7 @@ use super::{
     runformatting::{TextFont, TextRun, TextUnderlineFill, TextUnderlineLine},
 };
 use crate::{
+    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::drawingml::{
         colors::Color,
         core::{Hyperlink, LineProperties},
@@ -14,7 +15,6 @@ use crate::{
         },
         util::XmlNodeExt,
     },
-    error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };

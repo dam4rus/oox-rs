@@ -1,8 +1,8 @@
+use super::simpletypes::{Angle, Coordinate, PositiveCoordinate};
 use crate::{
     error::MissingAttributeError,
-    xml::{parse_xml_bool, XmlNode}
+    xml::{parse_xml_bool, XmlNode},
 };
-use super::simpletypes::{Angle, Coordinate, PositiveCoordinate};
 
 pub type Result<T> = ::std::result::Result<T, Box<dyn (::std::error::Error)>>;
 

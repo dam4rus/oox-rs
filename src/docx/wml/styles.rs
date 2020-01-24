@@ -4,12 +4,12 @@ use super::{
     table::{TblPrBase, TcPr, TrPr},
     util::XmlNodeExt,
 };
-use log::info;
 use crate::{
     error::MissingAttributeError,
     shared::sharedtypes::OnOff,
     xml::{parse_xml_bool, XmlNode},
 };
+use log::info;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 

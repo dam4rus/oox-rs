@@ -7,13 +7,13 @@ use super::{
     simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber},
     util::XmlNodeExt,
 };
-use log::info;
 use crate::{
     error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::sharedtypes::{OnOff, TwipsMeasure, XAlign, XmlName, YAlign},
     xml::{parse_xml_bool, XmlNode},
     xsdtypes::{XsdChoice, XsdType},
 };
+use log::info;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -1276,8 +1276,8 @@ impl Tbl {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use super::super::document::{Bookmark, ContentBlockContent, DecimalNumberOrPercent, ProofErr};
+    use super::*;
     use std::str::FromStr;
 
     impl TblPPr {
@@ -1422,9 +1422,10 @@ mod tests {
 
     impl TblLook {
         pub fn test_xml(node_name: &'static str) -> String {
-            format!(r#"<{node_name} w:firstRow="true" w:lastRow="true" w:firstColumn="true" w:lastColumn="true" w:noHBand="true" w:noVBand="true">
+            format!(
+                r#"<{node_name} w:firstRow="true" w:lastRow="true" w:firstColumn="true" w:lastColumn="true" w:noHBand="true" w:noVBand="true">
             </{node_name}>"#,
-                node_name=node_name,
+                node_name = node_name,
             )
         }
 
