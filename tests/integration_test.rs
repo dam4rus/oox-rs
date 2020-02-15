@@ -17,7 +17,7 @@ fn test_docx_package_load() {
     let sample_docx_file = manifest_dir.join("tests/sample.docx");
 
     let package = DocxPackage::from_file(&sample_docx_file).unwrap();
-    
+
     assert!(package.app_info.is_some());
     assert!(package.core.is_some());
     assert!(package.main_document.is_some());
