@@ -12,10 +12,7 @@ pub struct MissingAttributeError {
 }
 
 impl MissingAttributeError {
-    pub fn new<T>(node_name: T, attr: &'static str) -> Self
-    where
-        T: Into<String>,
-    {
+    pub fn new<T: Into<String>>(node_name: T, attr: &'static str) -> Self {
         Self {
             node_name: node_name.into(),
             attr,
@@ -47,10 +44,7 @@ pub struct MissingChildNodeError {
 }
 
 impl MissingChildNodeError {
-    pub fn new<T>(node_name: T, child_node: &'static str) -> Self
-    where
-        T: Into<String>,
-    {
+    pub fn new<T: Into<String>>(node_name: T, child_node: &'static str) -> Self {
         Self {
             node_name: node_name.into(),
             child_node,
@@ -82,10 +76,7 @@ pub struct NotGroupMemberError {
 }
 
 impl NotGroupMemberError {
-    pub fn new<T>(node_name: T, group: &'static str) -> Self
-    where
-        T: Into<String>,
-    {
+    pub fn new<T: Into<String>>(node_name: T, group: &'static str) -> Self {
         Self {
             node_name: node_name.into(),
             group,
@@ -135,16 +126,13 @@ pub struct LimitViolationError {
 }
 
 impl LimitViolationError {
-    pub fn new<T>(
+    pub fn new<T: Into<String>>(
         node_name: T,
         violating_node_name: &'static str,
         min_occurs: u32,
         max_occurs: MaxOccurs,
         occurs: u32,
-    ) -> Self
-    where
-        T: Into<String>,
-    {
+    ) -> Self {
         LimitViolationError {
             node_name: node_name.into(),
             violating_node_name,
@@ -195,10 +183,7 @@ pub struct ParseBoolError {
 }
 
 impl ParseBoolError {
-    pub fn new<T>(attr_value: T) -> Self
-    where
-        T: Into<String>,
-    {
+    pub fn new<T: Into<String>>(attr_value: T) -> Self {
         Self {
             attr_value: attr_value.into(),
         }
