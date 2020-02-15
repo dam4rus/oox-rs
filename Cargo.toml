@@ -29,3 +29,4 @@ simple_logger = "1.4.0"
 [features]
 docx = []
 pptx = []
+all = [ "docx", "pptx" ]

@@ -1,18 +1,23 @@
 #![cfg(feature = "docx")]
 extern crate oox;
 
-use oox::docx::package::Package;
+use oox::{
+    docx::package::Package as DocxPackage,
+    pptx::package::Package as PptxPackage,
+    shared::drawingml::coordsys::{Point2D, PositiveSize2D},
+};
 use std::path::PathBuf;
 
 #[test]
 #[ignore]
-fn test_package_load() {
+fn test_docx_package_load() {
     //simple_logger::init().unwrap();
 
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let sample_docx_file = manifest_dir.join("tests/sample.docx");
 
-    let package = Package::from_file(&sample_docx_file).unwrap();
+    let package = DocxPackage::from_file(&sample_docx_file).unwrap();
+    
     assert!(package.app_info.is_some());
     assert!(package.core.is_some());
     assert!(package.main_document.is_some());
@@ -28,30 +33,35 @@ fn test_package_load() {
 
 #[test]
 #[ignore]
-fn test_package_resolve_default_style() {
-    //simple_logger::init().unwrap();
-
+fn test_pptx_package_load() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let sample_docx_file = manifest_dir.join("tests/sample.docx");
+    let sample_pptx_file = manifest_dir.join("tests/sample.pptx");
 
-    let package = Package::from_file(&sample_docx_file).unwrap();
-    /*let def_style = */
-    package.resolve_document_default_style().unwrap();
-    // TODO(kalmar.robert) Write real unit test
-    //println!("{:?}", def_style);
-}
+    let document = PptxPackage::from_file(&sample_pptx_file).unwrap();
+    let mut slides = document.slides();
+    {
+        let first_slide = slides.next().unwrap();
+        let sptree = &first_slide.common_slide_data.shape_tree;
+        assert_eq!(sptree.non_visual_props.drawing_props.id, 1);
+        let transform = sptree.group_shape_props.transform.as_ref().unwrap();
+        assert_eq!(*transform.offset.as_ref().unwrap(), Point2D::new(0, 0));
+        assert_eq!(*transform.extents.as_ref().unwrap(), PositiveSize2D::new(0, 0));
+        assert_eq!(*transform.child_offset.as_ref().unwrap(), Point2D::new(0, 0));
+        assert_eq!(*transform.child_extents.as_ref().unwrap(), PositiveSize2D::new(0, 0));
+        assert_eq!(sptree.shape_array.len(), 2);
+    }
 
-#[test]
-#[ignore]
-fn test_package_get_main_document_theme() {
-    //simple_logger::init().unwrap();
+    {
+        let second_slide = slides.next().unwrap();
+        let sptree = &second_slide.common_slide_data.shape_tree;
+        assert_eq!(sptree.non_visual_props.drawing_props.id, 1);
+        let transform = sptree.group_shape_props.transform.as_ref().unwrap();
+        assert_eq!(*transform.offset.as_ref().unwrap(), Point2D::new(0, 0));
+        assert_eq!(*transform.extents.as_ref().unwrap(), PositiveSize2D::new(0, 0));
+        assert_eq!(*transform.child_offset.as_ref().unwrap(), Point2D::new(0, 0));
+        assert_eq!(*transform.child_extents.as_ref().unwrap(), PositiveSize2D::new(0, 0));
+        assert_eq!(sptree.shape_array.len(), 2);
+    }
 
-    let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let sample_docx_file = manifest_dir.join("tests/sample.docx");
-
-    let package = Package::from_file(&sample_docx_file).unwrap();
-    /*let theme = */
-    package.get_main_document_theme().unwrap();
-    // TODO(kalmar.robert) Write real unit test
-    //println!("{:?}", theme);
+    assert_eq!(slides.next().is_none(), true);
 }
