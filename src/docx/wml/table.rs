@@ -109,6 +109,10 @@ pub enum JcTable {
     End,
     #[strum(serialize = "start")]
     Start,
+    #[strum(serialize = "left")]
+    Left,
+    #[strum(serialize = "right")]
+    Right,
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -305,7 +309,10 @@ impl TblPr {
         for child_node in &xml_node.child_nodes {
             match child_node.local_name() {
                 "tblPrChange" => instance.change = Some(TblPrChange::from_xml_element(child_node)?),
-                _ => instance.base = instance.base.try_update_from_xml_element(child_node)?,
+                child_node_name => {
+                    info!("parsing {}", child_node_name);
+                    instance.base = instance.base.try_update_from_xml_element(child_node)?;
+                }
             }
         }
 

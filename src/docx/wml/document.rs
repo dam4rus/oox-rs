@@ -4310,16 +4310,28 @@ pub enum Jc {
 
 #[derive(Debug, Clone, Copy, PartialEq, EnumString)]
 pub enum TextDirection {
+    #[strum(serialize = "lrTb")]
+    LeftToRightTopToBottom,
     #[strum(serialize = "tb")]
     TopToBottom,
+    #[strum(serialize = "tbRl")]
+    TopToBottomRightToLeft,
     #[strum(serialize = "rl")]
     RightToLeft,
+    #[strum(serialize = "btLr")]
+    BottomToTopLeftToRight,
     #[strum(serialize = "lr")]
     LeftToRight,
+    #[strum(serialize = "lrTbV")]
+    LeftToRightTopToBottomRotated,
     #[strum(serialize = "tbV")]
     TopToBottomRotated,
+    #[strum(serialize = "tbRlV")]
+    TopToBottomRightToLeftRotated,
     #[strum(serialize = "rlV")]
     RightToLeftRotated,
+    #[strum(serialize = "tbLrV")]
+    TopToBottomLeftToRightRotated,
     #[strum(serialize = "lrV")]
     LeftToRightRotated,
 }
@@ -5357,10 +5369,22 @@ impl PageNumber {
 
         for (attr, value) in &xml_node.attributes {
             match attr.as_ref() {
-                "w:fmt" => instance.format = Some(value.parse()?),
-                "w:start" => instance.start = Some(value.parse()?),
-                "w:chapStyle" => instance.chapter_style = Some(value.parse()?),
-                "w:chapSep" => instance.chapter_separator = Some(value.parse()?),
+                "w:fmt" => {
+                    info!("parsing w:fmt => {}", value);
+                    instance.format = Some(value.parse()?);
+                }
+                "w:start" => {
+                    info!("parsing w:start => {}", value);
+                    instance.start = Some(value.parse()?);
+                }
+                "w:chapStyle" => {
+                    info!("parsing w:chapStyle => {}", value);
+                    instance.chapter_style = Some(value.parse()?);
+                }
+                "w:chapSep" => {
+                    info!("parsing w:chapSep => {}", value);
+                    instance.chapter_separator = Some(value.parse()?);
+                }
                 _ => (),
             }
         }

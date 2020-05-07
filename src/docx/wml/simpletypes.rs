@@ -9,8 +9,8 @@ pub type UcharHexNumber = u8;
 pub type ShortHexNumber = u16;
 pub type LongHexNumber = u32;
 pub type UnqualifiedPercentage = i32;
-pub type DecimalNumber = i32;
-pub type UnsignedDecimalNumber = u32;
+pub type DecimalNumber = i64;
+pub type UnsignedDecimalNumber = u64;
 pub type DateTime = String;
 pub type MacroName = String; // maxLength=33
 pub type FFName = String; // maxLength=65

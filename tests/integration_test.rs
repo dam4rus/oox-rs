@@ -9,7 +9,6 @@ use oox::{
 use std::path::PathBuf;
 
 #[test]
-#[ignore]
 fn test_docx_package_load() {
     //simple_logger::init().unwrap();
 

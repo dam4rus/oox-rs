@@ -263,7 +263,7 @@ impl Package {
             .as_ref()
     }
 
-    pub fn find_footnote_with_id(&self, id: i32) -> Option<&FtnEdn> {
+    pub fn find_footnote_with_id(&self, id: i64) -> Option<&FtnEdn> {
         self.footnotes.as_ref()?.0.iter().find(|ftn_edn| ftn_edn.id == id)
     }
 
@@ -313,7 +313,7 @@ impl Package {
             })
     }
 
-    pub fn find_numbering_level(&self, numbering_id: i32, level: i32) -> Option<&Lvl> {
+    pub fn find_numbering_level(&self, numbering_id: i64, level: i64) -> Option<&Lvl> {
         if !(0..=8).contains(&level) {
             return None;
         }
