@@ -54,6 +54,10 @@ impl Package {
 
             match PathBuf::from(zip_file.name()) {
                 file_path if file_path.starts_with("ppt/theme") => {
+                    if file_path.extension().unwrap_or_default() != "xml" {
+                        continue;
+                    }
+                    
                     info!("parsing theme file: {}", zip_file.name());
                     theme_map.insert(file_path, Box::new(OfficeStyleSheet::from_zip_file(&mut zip_file)?));
                 }
