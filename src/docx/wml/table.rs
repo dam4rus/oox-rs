@@ -14,6 +14,7 @@ use crate::{
     xsdtypes::{XsdChoice, XsdType},
 };
 use log::info;
+use strum::EnumString;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 

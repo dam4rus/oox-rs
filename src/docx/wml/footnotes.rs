@@ -4,6 +4,7 @@ use crate::{
     xml::XmlNode,
     xsdtypes::XsdChoice,
 };
+use strum::EnumString;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 

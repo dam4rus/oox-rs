@@ -1,6 +1,7 @@
 use crate::error::PatternRestrictionError;
 use regex::Regex;
 use std::{marker::PhantomData, str::FromStr};
+use strum::EnumString;
 
 pub type OnOff = bool;
 pub type Lang = String;
