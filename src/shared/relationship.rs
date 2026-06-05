@@ -1,11 +1,12 @@
 use crate::error::MissingAttributeError;
 use crate::xml::XmlNode;
+use std::fs::File;
 use std::{io::Read, str::FromStr};
 use zip::read::ZipFile;
 
 pub type RelationshipId = String;
 
-pub type Result<T> = ::std::result::Result<T, Box<dyn (::std::error::Error)>>;
+pub type Result<T> = ::std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub const THEME_RELATION_TYPE: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
 
@@ -39,7 +40,7 @@ impl Relationship {
     }
 }
 
-pub fn relationships_from_zip_file(zip_file: &mut ZipFile<'_>) -> Result<Vec<Relationship>> {
+pub fn relationships_from_zip_file(zip_file: &mut ZipFile<&File>) -> Result<Vec<Relationship>> {
     let mut xml_string = String::new();
     zip_file.read_to_string(&mut xml_string)?;
     let xml_node = XmlNode::from_str(xml_string.as_str())?;

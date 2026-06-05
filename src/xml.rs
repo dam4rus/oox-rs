@@ -1,13 +1,16 @@
 use crate::error::{InvalidXmlError, ParseBoolError};
 use quick_xml::{
-    events::{BytesStart, Event},
     Reader,
+    events::{BytesStart, Event},
 };
+use regex::Regex;
 use std::{
     collections::HashMap,
     fmt::{Display, Formatter},
+    fs::File,
     io::Read,
     str::FromStr,
+    sync::LazyLock,
 };
 use zip::read::ZipFile;
 
@@ -37,20 +40,23 @@ impl XmlNode {
     }
 
     pub fn local_name(&self) -> &str {
-        match self.name.find(':') {
-            Some(idx) => self.name.split_at(idx + 1).1,
-            None => self.name.as_str(),
+        static PATTERN_LOCAL_NAME: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"^[A-Za-z]+:(?P<local_name>[A-Za-z0-9]+)").unwrap());
+        match PATTERN_LOCAL_NAME.captures(&self.name) {
+            Some(capture) => capture.name("local_name").unwrap().as_str(),
+            None => &self.name,
         }
     }
 
-    fn from_quick_xml_element(xml_element: &BytesStart<'_>) -> Result<Self, ::std::str::Utf8Error> {
-        let name = ::std::str::from_utf8(xml_element.name())?;
+    fn from_quick_xml_element(xml_element: &BytesStart<'_>) -> Result<Self, Box<dyn std::error::Error>> {
+        let name_string = std::str::from_utf8(xml_element.as_ref())?;
+        let name = name_string.split_whitespace().next().ok_or("Error parsing XML tag")?;
         let mut node = Self::new(name);
 
         for attr in xml_element.attributes() {
             if let Ok(a) = attr {
-                let key_str = ::std::str::from_utf8(&a.key)?;
-                let value_str = ::std::str::from_utf8(&a.value)?;
+                let key_str = std::str::from_utf8(&a.key.as_ref())?;
+                let value_str = std::str::from_utf8(&a.value.as_ref())?;
                 node.attributes.insert(String::from(key_str), String::from(value_str));
             }
         }
@@ -62,19 +68,17 @@ impl XmlNode {
         xml_node: &mut Self,
         xml_element: &BytesStart<'_>,
         xml_reader: &mut Reader<&[u8]>,
-    ) -> Result<Vec<Self>, ::std::str::Utf8Error> {
+    ) -> Result<Vec<Self>, Box<dyn std::error::Error>> {
         let mut child_nodes = Vec::new();
-
-        let mut buffer = Vec::new();
         loop {
-            match xml_reader.read_event(&mut buffer) {
+            match xml_reader.read_event() {
                 Ok(Event::Start(ref element)) => {
                     let mut node = Self::from_quick_xml_element(element)?;
                     node.child_nodes = Self::parse_child_elements(&mut node, element, xml_reader)?;
                     child_nodes.push(node);
                 }
                 Ok(Event::Text(text)) => {
-                    xml_node.text = text.unescape_and_decode(xml_reader).ok();
+                    xml_node.text = Some(text.decode()?.to_string());
                 }
                 Ok(Event::Empty(ref element)) => {
                     let node = Self::from_quick_xml_element(element)?;
@@ -90,8 +94,6 @@ impl XmlNode {
                 }
                 _ => (),
             }
-
-            buffer.clear();
         }
 
         Ok(child_nodes)
@@ -103,9 +105,8 @@ impl FromStr for XmlNode {
 
     fn from_str(xml_string: &str) -> Result<Self, Self::Err> {
         let mut xml_reader = Reader::from_str(xml_string.as_ref());
-        let mut buffer = Vec::new();
         loop {
-            match xml_reader.read_event(&mut buffer) {
+            match xml_reader.read_event() {
                 Ok(Event::Start(ref element)) => {
                     let mut root_node = Self::from_quick_xml_element(element).map_err(|_| InvalidXmlError {})?;
                     root_node.child_nodes = Self::parse_child_elements(&mut root_node, element, &mut xml_reader)
@@ -115,8 +116,6 @@ impl FromStr for XmlNode {
                 Ok(Event::Eof) => break,
                 _ => (),
             }
-
-            buffer.clear();
         }
 
         Err(InvalidXmlError {})
@@ -131,7 +130,7 @@ pub fn parse_xml_bool<T: AsRef<str>>(value: T) -> Result<bool, ParseBoolError> {
     }
 }
 
-pub fn zip_file_to_xml_node(zip_file: &mut ZipFile) -> Result<XmlNode, Box<dyn std::error::Error>> {
+pub fn zip_file_to_xml_node(zip_file: &mut ZipFile<&File>) -> Result<XmlNode, Box<dyn std::error::Error>> {
     let mut xml_string = String::new();
     zip_file.read_to_string(&mut xml_string)?;
     XmlNode::from_str(xml_string.as_str()).map_err(Into::into)

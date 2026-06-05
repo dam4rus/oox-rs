@@ -1,8 +1,8 @@
 use super::{
     sharedstylesheet::ColorMapping,
     simpletypes::{
-        parse_hex_color_rgb, Angle, FixedPercentage, HexColorRGB, Percentage, PositiveFixedAngle,
-        PositiveFixedPercentage, PositivePercentage, PresetColorVal, SchemeColorVal, SystemColorVal,
+        Angle, FixedPercentage, HexColorRGB, Percentage, PositiveFixedAngle, PositiveFixedPercentage,
+        PositivePercentage, PresetColorVal, SchemeColorVal, SystemColorVal, parse_hex_color_rgb,
     },
     util::XmlNodeExt,
 };

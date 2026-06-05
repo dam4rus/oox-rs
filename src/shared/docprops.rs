@@ -22,7 +22,10 @@ impl AppInfo {
         Self::from_zip_file(&mut app_xml_file)
     }
 
-    pub fn from_zip_file(zip_file: &mut ZipFile) -> Result<Self> {
+    pub fn from_zip_file<R>(zip_file: &mut ZipFile<R>) -> Result<Self>
+    where
+        R: Read + Seek,
+    {
         let mut xml_string = String::new();
         zip_file.read_to_string(&mut xml_string)?;
         let root = XmlNode::from_str(&xml_string)?;
@@ -60,7 +63,10 @@ impl Core {
         Self::from_zip_file(&mut core_xml_file)
     }
 
-    pub fn from_zip_file(zip_file: &mut ZipFile) -> Result<Self> {
+    pub fn from_zip_file<R>(zip_file: &mut ZipFile<R>) -> Result<Self>
+    where
+        R: Read + Seek,
+    {
         let mut xml_string = String::new();
         zip_file.read_to_string(&mut xml_string)?;
         let root = XmlNode::from_str(&xml_string)?;

@@ -9,10 +9,11 @@ use crate::{
     xsdtypes::XsdChoice,
 };
 use log::trace;
+use std::fs::File;
 use std::{io::Read, str::FromStr};
 use zip::read::ZipFile;
 
-pub type Result<T> = ::std::result::Result<T, Box<dyn (::std::error::Error)>>;
+pub type Result<T> = ::std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ColorMapping {
@@ -531,7 +532,8 @@ pub struct OfficeStyleSheet {
     /// In this example, we see the basic structure of how a theme elements is defined and have left out the true guts of
     /// each individual piece to save room. Each part (color scheme, font scheme, format scheme) is defined elsewhere
     /// within DrawingML.
-    pub theme_elements: Box<BaseStyles>,
+    /// UPDATE: Set as optional since themeOverride file (`theme/themeOverride{number}.xml`) does not contain <theme> tag
+    pub theme_elements: Option<Box<BaseStyles>>,
 
     /// This element allows for the definition of default shape, line, and textbox formatting properties. An application
     /// can use this information to format a shape (or text) initially on insertion into a document.
@@ -595,10 +597,14 @@ pub struct OfficeStyleSheet {
     /// This element allows for a custom color palette to be created and which shows up alongside other color schemes.
     /// This can be very useful, for example, when someone would like to maintain a corporate color palette.
     pub custom_color_list: Option<Vec<CustomColor>>,
+
+    /// TODO: testing implementations of themeOverride behaviour, currently placed
+    /// documentation: https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.drawing.themeoverride
+    pub theme_override: Option<Box<BaseStyles>>,
 }
 
 impl OfficeStyleSheet {
-    pub fn from_zip_file(zip_file: &mut ZipFile<'_>) -> Result<Self> {
+    pub fn from_zip_file(zip_file: &mut ZipFile<&File>) -> Result<Self> {
         let mut xml_string = String::new();
         zip_file.read_to_string(&mut xml_string)?;
         let xml_node = XmlNode::from_str(xml_string.as_str())?;
@@ -614,37 +620,43 @@ impl OfficeStyleSheet {
         let mut object_defaults = None;
         let mut extra_color_scheme_list = None;
         let mut custom_color_list = None;
+        let mut theme_override = None;
 
-        for child_node in &xml_node.child_nodes {
-            match child_node.local_name() {
-                "themeElements" => theme_elements = Some(Box::new(BaseStyles::from_xml_element(child_node)?)),
-                "objectDefaults" => object_defaults = Some(ObjectStyleDefaults::from_xml_element(child_node)?),
-                "extraClrSchemeLst" => {
-                    extra_color_scheme_list = Some(
-                        child_node
-                            .child_nodes
-                            .iter()
-                            .filter(|child_node| child_node.local_name() == "extraClrScheme")
-                            .map(ColorSchemeAndMapping::from_xml_element)
-                            .collect::<Result<Vec<_>>>()?,
-                    );
+        if xml_node.local_name() == "themeOverride" {
+            theme_override = Some(Box::new(BaseStyles::from_xml_element(&xml_node)?));
+        } else {
+            for child_node in &xml_node.child_nodes {
+                match child_node.local_name() {
+                    "themeElements" => {
+                        theme_elements = Some(Box::new(BaseStyles::from_xml_element(child_node)?));
+                    }
+                    "objectDefaults" => {
+                        object_defaults = Some(ObjectStyleDefaults::from_xml_element(child_node)?);
+                    }
+                    "extraClrSchemeLst" => {
+                        extra_color_scheme_list = Some(
+                            child_node
+                                .child_nodes
+                                .iter()
+                                .filter(|child_node| child_node.local_name() == "extraClrScheme")
+                                .map(ColorSchemeAndMapping::from_xml_element)
+                                .collect::<Result<Vec<_>>>()?,
+                        );
+                    }
+                    "custClrLst" => {
+                        custom_color_list = Some(
+                            child_node
+                                .child_nodes
+                                .iter()
+                                .filter(|child_node| child_node.local_name() == "custClr")
+                                .map(CustomColor::from_xml_element)
+                                .collect::<Result<Vec<_>>>()?,
+                        );
+                    }
+                    _ => (),
                 }
-                "custClrLst" => {
-                    custom_color_list = Some(
-                        child_node
-                            .child_nodes
-                            .iter()
-                            .filter(|child_node| child_node.local_name() == "custClr")
-                            .map(CustomColor::from_xml_element)
-                            .collect::<Result<Vec<_>>>()?,
-                    )
-                }
-                _ => (),
             }
         }
-
-        let theme_elements =
-            theme_elements.ok_or_else(|| MissingChildNodeError::new(xml_node.name.clone(), "themeElements"))?;
 
         Ok(Self {
             name,
@@ -652,6 +664,7 @@ impl OfficeStyleSheet {
             object_defaults,
             extra_color_scheme_list,
             custom_color_list,
+            theme_override,
         })
     }
 }

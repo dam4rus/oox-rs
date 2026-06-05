@@ -18,7 +18,7 @@ use crate::{
         },
         relationship::RelationshipId,
     },
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use std::{error::Error, io::Read, str::FromStr};
@@ -383,7 +383,7 @@ pub struct SlideMaster {
 }
 
 impl SlideMaster {
-    pub fn from_zip_file(zip_file: &mut ZipFile<'_>) -> Result<Self> {
+    pub fn from_zip_file(zip_file: &mut ZipFile<&std::fs::File>) -> Result<Self> {
         let mut xml_string = String::new();
         zip_file.read_to_string(&mut xml_string)?;
 
@@ -478,7 +478,7 @@ pub struct SlideLayout {
 }
 
 impl SlideLayout {
-    pub fn from_zip_file(zip_file: &mut ZipFile<'_>) -> Result<Self> {
+    pub fn from_zip_file(zip_file: &mut ZipFile<&std::fs::File>) -> Result<Self> {
         let mut xml_string = String::new();
         zip_file.read_to_string(&mut xml_string)?;
 
@@ -606,11 +606,11 @@ pub struct Slide {
 }
 
 impl Slide {
-    pub fn from_zip_file(zip_file: &mut ZipFile<'_>) -> Result<Self> {
+    pub fn from_zip_file(zip_file: &mut ZipFile<&std::fs::File>) -> Result<Self> {
         let mut xml_string = String::new();
         zip_file.read_to_string(&mut xml_string)?;
-
-        Self::from_xml_element(&XmlNode::from_str(xml_string.as_str())?)
+        let node = XmlNode::from_str(xml_string.as_str())?;
+        Self::from_xml_element(&node)
     }
 
     pub fn from_xml_element(xml_node: &XmlNode) -> Result<Self> {

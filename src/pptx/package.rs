@@ -5,7 +5,7 @@ use super::pml::{
 use crate::shared::{
     docprops::{AppInfo, Core},
     drawingml::sharedstylesheet::OfficeStyleSheet,
-    relationship::{relationships_from_zip_file, Relationship},
+    relationship::{Relationship, relationships_from_zip_file},
 };
 use log::info;
 use std::collections::HashMap;
@@ -30,7 +30,7 @@ pub struct Package {
 }
 
 impl Package {
-    pub fn from_file(pptx_path: &Path) -> Result<Self, Box<dyn (::std::error::Error)>> {
+    pub fn from_file(pptx_path: &Path) -> Result<Self, Box<dyn std::error::Error>> {
         let pptx_file = File::open(&pptx_path)?;
         let mut zipper = ZipArchive::new(&pptx_file)?;
 
@@ -57,7 +57,7 @@ impl Package {
                     if file_path.extension().unwrap_or_default() != "xml" {
                         continue;
                     }
-                    
+
                     info!("parsing theme file: {}", zip_file.name());
                     theme_map.insert(file_path, Box::new(OfficeStyleSheet::from_zip_file(&mut zip_file)?));
                 }
@@ -132,7 +132,7 @@ impl Package {
         })
     }
 
-    pub fn slides(&self) -> Slides {
+    pub fn slides<'a>(&'a self) -> Slides<'a> {
         Slides::new(&self.slide_map)
     }
 }

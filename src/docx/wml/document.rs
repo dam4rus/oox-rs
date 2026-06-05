@@ -1,9 +1,9 @@
 use super::{
     drawing::{Anchor, Inline},
     simpletypes::{
-        parse_on_off_xml_element, parse_text_scale_percent, DateTime, DecimalNumber, EightPointMeasure, FFHelpTextVal,
-        FFName, FFStatusTextVal, LongHexNumber, MacroName, PointMeasure, ShortHexNumber, TextScale, UcharHexNumber,
-        UnqualifiedPercentage, UnsignedDecimalNumber,
+        DateTime, DecimalNumber, EightPointMeasure, FFHelpTextVal, FFName, FFStatusTextVal, LongHexNumber, MacroName,
+        PointMeasure, ShortHexNumber, TextScale, UcharHexNumber, UnqualifiedPercentage, UnsignedDecimalNumber,
+        parse_on_off_xml_element, parse_text_scale_percent,
     },
     table::Tbl,
     util::XmlNodeExt,
@@ -14,15 +14,15 @@ use crate::{
         ParseHexColorError,
     },
     shared::{
-        drawingml::simpletypes::{parse_hex_color_rgb, HexColorRGB},
+        drawingml::simpletypes::{HexColorRGB, parse_hex_color_rgb},
         relationship::RelationshipId,
         sharedtypes::{
             CalendarType, ConformanceClass, Lang, OnOff, Percentage, PositiveUniversalMeasure, TwipsMeasure,
             UniversalMeasure, VerticalAlignRun, XAlign, XmlName, YAlign,
         },
     },
-    update::{update_options, Update},
-    xml::{parse_xml_bool, XmlNode},
+    update::{Update, update_options},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use log::info;
@@ -2474,7 +2474,7 @@ pub enum BrType {
     Page,
     #[strum(serialize = "column")]
     Column,
-    #[strum(serialzie = "textWrapping")]
+    #[strum(serialize = "textWrapping")]
     TextWrapping,
 }
 
@@ -3689,7 +3689,7 @@ impl RangeMarkupElements {
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum MathContent {
     // OMathParagraph(OMathParagraph),
-// OMath(OMath),
+    // OMath(OMath),
 }
 
 impl MathContent {

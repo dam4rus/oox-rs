@@ -9,7 +9,7 @@ use crate::{
         relationship::RelationshipId,
         sharedtypes::ConformanceClass,
     },
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
 };
 use std::{
     error::Error,

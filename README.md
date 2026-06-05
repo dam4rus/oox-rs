@@ -29,3 +29,12 @@ use oox::docx::package::Package as DocxPackage;
 let package = DocxPackage::from_file(&PathBuf::from("path/to/example/file.docx")).unwrap();
 let main_document = package.main_document.as_ref().unwrap(); // Access the main document
 ```
+
+### Load a pptx file
+
+```Rust
+use oox::pptx::package::Package as PptxPackage;
+
+let package = PptxPackage::from_file(&PathBuf::from("path/to/example/file.pptx")).unwrap();
+let slides = package.slides().unwrap();  // Access all slides in a presentation
+```

@@ -4,7 +4,7 @@ use super::simpletypes::{
 };
 use crate::{
     error::{MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use std::error::Error;

@@ -1,13 +1,13 @@
 use super::{
     document::{PPr, PPrGeneral, RPr},
-    simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber},
+    simpletypes::{DecimalNumber, LongHexNumber, parse_on_off_xml_element},
     table::{TblPrBase, TcPr, TrPr},
     util::XmlNodeExt,
 };
 use crate::{
     error::MissingAttributeError,
     shared::sharedtypes::OnOff,
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
 };
 use log::info;
 

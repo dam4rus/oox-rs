@@ -15,7 +15,7 @@ use crate::{
         },
         util::XmlNodeExt,
     },
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use std::error::Error;
@@ -610,7 +610,7 @@ impl TextParagraphProperties {
                                             0,
                                             MaxOccurs::Value(32),
                                             len as u32,
-                                        )))
+                                        )));
                                     }
                                 };
                             }

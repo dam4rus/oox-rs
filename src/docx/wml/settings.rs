@@ -1,6 +1,6 @@
 use super::{
     document::{ChapterSep, DecimalNumberOrPercent, EdnProps, FtnProps, Language, NumberFormat, Rel},
-    simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber, UnsignedDecimalNumber},
+    simpletypes::{DecimalNumber, LongHexNumber, UnsignedDecimalNumber, parse_on_off_xml_element},
     util::XmlNodeExt,
 };
 use crate::{
@@ -10,7 +10,7 @@ use crate::{
         relationship::RelationshipId,
         sharedtypes::{OnOff, TwipsMeasure},
     },
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
 };
 use log::info;
 

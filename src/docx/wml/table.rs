@@ -4,13 +4,13 @@ use super::{
         RangeMarkupElements, RunLevelElts, SdtEndPr, SdtPr, Shd, SignedTwipsMeasure, TextDirection, TrackChange,
         VAnchor, VerticalJc,
     },
-    simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber},
+    simpletypes::{DecimalNumber, LongHexNumber, parse_on_off_xml_element},
     util::XmlNodeExt,
 };
 use crate::{
     error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::sharedtypes::{OnOff, TwipsMeasure, XAlign, XmlName, YAlign},
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use log::info;

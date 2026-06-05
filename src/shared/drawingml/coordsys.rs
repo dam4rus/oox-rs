@@ -1,10 +1,10 @@
 use super::simpletypes::{Angle, Coordinate, PositiveCoordinate};
 use crate::{
     error::MissingAttributeError,
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
 };
 
-pub type Result<T> = ::std::result::Result<T, Box<dyn (::std::error::Error)>>;
+pub type Result<T> = ::std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub struct Point2D {

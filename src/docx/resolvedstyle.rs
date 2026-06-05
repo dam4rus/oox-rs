@@ -8,7 +8,7 @@ use super::wml::{
 };
 use crate::{
     shared::sharedtypes::{OnOff, VerticalAlignRun},
-    update::{update_options, Update},
+    update::{Update, update_options},
 };
 
 pub type ParagraphProperties = PPrBase;

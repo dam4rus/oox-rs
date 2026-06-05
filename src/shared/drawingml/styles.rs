@@ -229,7 +229,7 @@ impl StyleMatrix {
                                 3,
                                 MaxOccurs::Unbounded,
                                 len as u32,
-                            )))
+                            )));
                         }
                     };
                 }
@@ -250,7 +250,7 @@ impl StyleMatrix {
                                 3,
                                 MaxOccurs::Unbounded,
                                 len as u32,
-                            )))
+                            )));
                         }
                     };
                 }
@@ -271,7 +271,7 @@ impl StyleMatrix {
                                 3,
                                 MaxOccurs::Unbounded,
                                 len as u32,
-                            )))
+                            )));
                         }
                     };
                 }
@@ -291,7 +291,7 @@ impl StyleMatrix {
                                 3,
                                 MaxOccurs::Unbounded,
                                 len as u32,
-                            )))
+                            )));
                         }
                     };
                 }

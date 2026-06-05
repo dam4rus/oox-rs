@@ -2,8 +2,8 @@ use super::{
     resolvedstyle::{ResolvedStyle, RunProperties},
     wml::{
         document::{
-            BlockLevelElts, ContentBlockContent, ContentRunContent, Document, PContent, PPr, RPr, RPrBase,
-            SectPrContents, P, R,
+            BlockLevelElts, ContentBlockContent, ContentRunContent, Document, P, PContent, PPr, R, RPr, RPrBase,
+            SectPrContents,
         },
         footnotes::{Footnotes, FtnEdn, FtnEdnType},
         numbering::{Lvl, Numbering},
@@ -362,9 +362,9 @@ mod tests {
             resolvedstyle::ParagraphProperties,
             wml::{
                 document::{
-                    BlockLevelElts, ContentBlockContent, ContentRunContent, Document, LineSpacingRule, PContent, PPr,
-                    PPrBase, PPrGeneral, ParaRPr, RPr, RPrBase, RunInnerContent, SignedTwipsMeasure, Spacing,
-                    TextAlignment, Underline, UnderlineType, P, R,
+                    BlockLevelElts, ContentBlockContent, ContentRunContent, Document, LineSpacingRule, P, PContent,
+                    PPr, PPrBase, PPrGeneral, ParaRPr, R, RPr, RPrBase, RunInnerContent, SignedTwipsMeasure, Spacing,
+                    TextAlignment, Underline, UnderlineType,
                 },
                 footnotes::{Footnotes, FtnEdn, FtnEdnType},
                 settings::Settings,

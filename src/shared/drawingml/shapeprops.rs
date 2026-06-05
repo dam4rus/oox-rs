@@ -10,7 +10,7 @@ use super::{
 use crate::{
     error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::relationship::RelationshipId,
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use log::trace;
@@ -1378,7 +1378,7 @@ impl GradientFillProperties {
                                             2,
                                             MaxOccurs::Unbounded,
                                             len as u32,
-                                        )))
+                                        )));
                                     }
                                 }
                             }

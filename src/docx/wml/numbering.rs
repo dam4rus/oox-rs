@@ -1,12 +1,12 @@
 use super::{
     document::{Control, Drawing, Jc, NumFmt, PPrGeneral, RPr, Rel},
-    simpletypes::{parse_on_off_xml_element, DecimalNumber, LongHexNumber},
+    simpletypes::{DecimalNumber, LongHexNumber, parse_on_off_xml_element},
     util::XmlNodeExt,
 };
 use crate::{
     error::{LimitViolationError, MaxOccurs, MissingAttributeError, MissingChildNodeError, NotGroupMemberError},
     shared::sharedtypes::OnOff,
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 use log::info;

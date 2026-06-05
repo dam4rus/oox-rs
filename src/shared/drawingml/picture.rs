@@ -4,7 +4,7 @@ use super::{
 };
 use crate::{error::MissingChildNodeError, xml::XmlNode};
 
-pub type Result<T> = ::std::result::Result<T, Box<dyn (::std::error::Error)>>;
+pub type Result<T> = ::std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PictureNonVisual {

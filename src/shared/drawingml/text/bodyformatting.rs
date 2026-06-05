@@ -7,11 +7,11 @@ use crate::{
             TextHorizontalOverflowType, TextSpacingPercent, TextVertOverflowType, TextVerticalType, TextWrappingType,
         },
     },
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
     xsdtypes::{XsdChoice, XsdType},
 };
 
-pub type Result<T> = ::std::result::Result<T, Box<dyn (::std::error::Error)>>;
+pub type Result<T> = ::std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct TextBodyProperties {

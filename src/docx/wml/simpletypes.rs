@@ -1,7 +1,7 @@
 use crate::{
     error::{ParseBoolError, PatternRestrictionError},
     shared::sharedtypes::OnOff,
-    xml::{parse_xml_bool, XmlNode},
+    xml::{XmlNode, parse_xml_bool},
 };
 use regex::Regex;
 
