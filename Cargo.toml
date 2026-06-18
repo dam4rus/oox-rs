@@ -12,14 +12,14 @@ readme = "README.md"
 exclude = ["tests/sample.pptx", "tests/sample.docx", "tests/presentation.xml"]
 
 [dependencies]
-quick-xml = "0.40.1"
-zip = { version = "8.6.0", default-features = false, features = [
+quick-xml = "0.40"
+zip = { version = "8", default-features = false, features = [
     "deflate-flate2",
 ] }
-flate2 = { version = "1.1.9" } # need to be added for the deflate-flate2 feature
-regex = { version = "1.12.3", default-features = false, features = ["std"] }
+flate2 = { version = "1" } # need to be added for the deflate-flate2 feature
+regex = { version = "1", default-features = false, features = ["std"] }
 strum = { version = "0.28", features = ["derive"] }
-log = "0.4.32"
+log = "0.4"
 
 [features]
 docx = []
