@@ -11,5 +11,3 @@ pub mod xml;
 pub mod xsdtypes;
 
 extern crate strum;
-#[macro_use]
-extern crate strum_macros;

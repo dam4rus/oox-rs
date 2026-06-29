@@ -22,6 +22,7 @@ use crate::{
     xsdtypes::{XsdChoice, XsdType},
 };
 use std::{error::Error, io::Read, str::FromStr};
+use strum::EnumString;
 use zip::read::ZipFile;
 
 use super::{

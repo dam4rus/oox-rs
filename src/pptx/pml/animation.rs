@@ -16,6 +16,7 @@ use crate::{
     xsdtypes::{XsdChoice, XsdType},
 };
 use std::{error::Error, str::FromStr};
+use strum::EnumString;
 
 pub type Result<T> = ::std::result::Result<T, Box<dyn Error>>;
 

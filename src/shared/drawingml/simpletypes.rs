@@ -1,5 +1,6 @@
 use crate::error::{AdjustParseError, ParseHexColorRGBError, StringLengthMismatch};
 use std::str::FromStr;
+use strum::EnumString;
 
 /// This simple type specifies that its values shall be a 128-bit globally unique identifier (GUID) value.
 ///

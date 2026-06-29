@@ -13,6 +13,7 @@ use crate::{
     xml::{XmlNode, parse_xml_bool},
 };
 use log::info;
+use strum::EnumString;
 
 pub type Base64Binary = String;
 pub type DocType = String;

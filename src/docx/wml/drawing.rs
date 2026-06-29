@@ -18,6 +18,7 @@ use crate::{
     xml::{XmlNode, parse_xml_bool},
     xsdtypes::XsdChoice,
 };
+use strum::EnumString;
 
 type Result<T> = ::std::result::Result<T, Box<dyn std::error::Error>>;
 

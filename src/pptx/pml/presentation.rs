@@ -16,6 +16,7 @@ use std::{
     io::{Read, Seek},
     str::FromStr,
 };
+use strum::EnumString;
 
 pub type Result<T> = ::std::result::Result<T, Box<dyn Error>>;
 
